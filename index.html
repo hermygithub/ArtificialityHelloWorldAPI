@@ -104,7 +104,7 @@
             // Script Object with String keys and values, and so the result
             // is treated as a JavaScript object (folderSet).
             var result = resp.response.result;
-            if (Object.keys(v).length == 0) {
+            if (Object.keys(result ).length == 0) {
                 appendPre('Nothing returned!');
             } else {
               appendPre('Result:');
