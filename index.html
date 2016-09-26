@@ -128,7 +128,7 @@
 
         // Make the API request.
         var op = gapi.client.request({
-            'root': 'https://script.googleapis.com', 'path': 'v1/scripts/' + SCRIPT_ID + ':run', 'params': parameters
+            'root': 'https://script.googleapis.com', 'path': 'v1/scripts/' + SCRIPT_ID + ':run', 'params': parameters,
             'method': 'POST', 'body': request
         });
 
