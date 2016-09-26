@@ -111,6 +111,7 @@
 
      /**
        * Calls an Apps Script function 
+	   * https://developers.google.com/api-client-library/javascript/reference/referencedocs#gapiclientrequest
        */
       function handleClickMe() {
 
@@ -122,13 +123,10 @@
         var request = {
             'function': 'myFunction'
             };
-        var parameters = {
-            'yql_url': url
-            };
 
         // Make the API request.
         var op = gapi.client.request({
-            'root': 'https://script.googleapis.com', 'path': 'v1/scripts/' + SCRIPT_ID + ':run', 'params': parameters,
+            'root': 'https://script.googleapis.com', 'path': 'v1/scripts/' + SCRIPT_ID + ':run', 'params': { 'yql_url': url },
             'method': 'POST', 'body': request
         });
 
