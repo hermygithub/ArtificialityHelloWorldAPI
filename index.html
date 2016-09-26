@@ -121,12 +121,13 @@
 
         // Create an execution request object.
         var request = {
-            'function': 'myYQLFunction'
+            'function': 'myYQLFunction',
+			'yql_url': url
             };
 
         // Make the API request.
         var op = gapi.client.request({
-            'root': 'https://script.googleapis.com', 'path': 'v1/scripts/' + SCRIPT_ID + ':run', 'params': {'yql_url': url},
+            'root': 'https://script.googleapis.com', 'path': 'v1/scripts/' + SCRIPT_ID + ':run', 
             'method': 'POST', 'body': request
         });
 
