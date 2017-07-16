@@ -31,6 +31,7 @@
        * @param {Object} authResult Authorization result.
        */
       function handleAuthResult(authResult) {
+        console.log("function handleAuthResult(authResult)");
         var authorizeDiv = document.getElementById('authorize-div');
         if (authResult && !authResult.error) {
           // Hide auth UI, then load client library.
@@ -49,6 +50,7 @@
        * @param {Event} event Button click event.
        */
       function handleAuthClick(event) {
+        console.log("function handleAuthClick(event)");
         gapi.auth.authorize(
           {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
           handleAuthResult);
@@ -59,6 +61,7 @@
        * Calls an Apps Script function 
        */
       function callScriptFunction() {
+        console.log("function callScriptFunction()");
 
         // Create an execution request object.
         var request = {
@@ -115,15 +118,16 @@
 	   * https://developers.google.com/api-client-library/javascript/reference/referencedocs#gapiclientrequest
        */
       function handleClickMe() {
+        console.log("function handleClickMe()");
 
 	             //https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'https%3A%2F%2Fru.insider.pro%2Fanalytics%2F2016-09-24%2F5-provalov-facebook%2F'%20and%20xpath%3D'%2F%2F*%5B%40itemprop%3D%22articleBody%22%5D%2F%2Fp%2Ftext()'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=
 	  
-		var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%27https%3A%2F%2Fru.insider.pro%2Fanalytics%2F2016-09-24%2F5-provalov-facebook%2F%27%20and%20xpath%3D%27%2F%2F*%5B%40itemprop%3D%22articleBody%22%5D%2F%2Fp%2Ftext()%27&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
+    		var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%27https%3A%2F%2Fru.insider.pro%2Fanalytics%2F2016-09-24%2F5-provalov-facebook%2F%27%20and%20xpath%3D%27%2F%2F*%5B%40itemprop%3D%22articleBody%22%5D%2F%2Fp%2Ftext()%27&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
 
-        // Create an execution request object.
-		var headers = {
-			  'Content-Type': 'application/json'
-			};
+            // Create an execution request object.
+    		var headers = {
+  			  'Content-Type': 'application/json'
+  			};
 		
         var request = {
             'function': 'myYQLFunction',
@@ -168,6 +172,7 @@
        * @param {string} message Text to be placed in pre element.
        */
       function appendPre(message) {
+        console.log("function appendPre(message)");
         var pre = document.getElementById('output');
         var textContent = document.createTextNode(message + '\n');
         pre.appendChild(textContent);
