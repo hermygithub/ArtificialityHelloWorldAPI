@@ -6,8 +6,9 @@
       // var CLIENT_ID = '<YOUR_CLIENT_ID>';
       var CLIENT_ID = '72627424025-lisobij165v0p42vucnsid5h4bdml8kf.apps.googleusercontent.com';
 
-      // var scriptId = "ENTER_YOUR_SCRIPT_ID_HERE";
-      var scriptId = "MSWoxFoehyXCgC6aFT2jDz-Gx22C71P8y";
+
+      // var SCRIPT_ID = "ENTER_YOUR_SCRIPT_ID_HERE";
+      var SCRIPT_ID = "MSWoxFoehyXCgC6aFT2jDz-Gx22C71P8y";
 
       var SCOPES = ['https://www.googleapis.com/auth/drive'];
 
@@ -15,6 +16,7 @@
        * Check if current user has authorized this application.
        */
       function checkAuth() {
+        console.log("function checkAuth()");
         gapi.auth.authorize(
           {
             'client_id': CLIENT_ID,
@@ -29,6 +31,7 @@
        * @param {Object} authResult Authorization result.
        */
       function handleAuthResult(authResult) {
+        console.log("function handleAuthResult(authResult)");
         var authorizeDiv = document.getElementById('authorize-div');
         if (authResult && !authResult.error) {
           // Hide auth UI, then load client library.
@@ -47,6 +50,7 @@
        * @param {Event} event Button click event.
        */
       function handleAuthClick(event) {
+        console.log("function handleAuthClick(event)");
         gapi.auth.authorize(
           {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
           handleAuthResult);
@@ -54,11 +58,10 @@
       }
 
       /**
-       * Calls an Apps Script function to list the folders in the user's
-       * root Drive folder.
+       * Calls an Apps Script function 
        */
       function callScriptFunction() {
-//        var scriptId = "ENTER_YOUR_SCRIPT_ID_HERE";
+        console.log("function callScriptFunction()");
 
         // Create an execution request object.
         var request = {
@@ -67,10 +70,8 @@
 
         // Make the API request.
         var op = gapi.client.request({
-            'root': 'https://script.googleapis.com',
-            'path': 'v1/scripts/' + scriptId + ':run',
-            'method': 'POST',
-            'body': request
+            'root': 'https://script.googleapis.com', 'path': 'v1/scripts/' + SCRIPT_ID + ':run',
+            'method': 'POST', 'body': request
         });
 
         op.execute(function(resp) {
@@ -99,23 +100,72 @@
             }
           } else {
             // The structure of the result will depend upon what the Apps
-            // Script function returns. Here, the function returns an Apps
-            // Script Object with String keys and values, and so the result
-            // is treated as a JavaScript object (folderSet).
+            // Script function returns. 
+            console.log(result);
             var result = resp.response.result;
-            if (Object.keys(v).length == 0) {
+            if (Object.keys(result ).length == 0) {
                 appendPre('Nothing returned!');
             } else {
               appendPre('Result:');
               appendPre('\t' + result);
-
-//              Object.keys(folderSet).forEach(function(id){   appendPre('\t' + result[id] + ' (' + id  + ')');  });
 
             }
           }
         });
       }
 
+     /**
+       * Calls an Apps Script function 
+	   * https://developers.google.com/api-client-library/javascript/reference/referencedocs#gapiclientrequest
+       */
+      function handleClickMe() {
+        console.log("function handleClickMe()");
+
+	             //https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'https%3A%2F%2Fru.insider.pro%2Fanalytics%2F2016-09-24%2F5-provalov-facebook%2F'%20and%20xpath%3D'%2F%2F*%5B%40itemprop%3D%22articleBody%22%5D%2F%2Fp%2Ftext()'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=
+	  
+    		var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%27https%3A%2F%2Fru.insider.pro%2Fanalytics%2F2016-09-24%2F5-provalov-facebook%2F%27%20and%20xpath%3D%27%2F%2F*%5B%40itemprop%3D%22articleBody%22%5D%2F%2Fp%2Ftext()%27&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
+
+            // Create an execution request object.
+    		var headers = {
+  			  'Content-Type': 'application/json'
+  			};
+		
+        var request = {
+            'function': 'myYQLFunction',
+			 'parameters': [ url ]
+            };
+
+        // Make the API request.
+        var op = gapi.client.request({
+            'root': 'https://script.googleapis.com', 'path': 'v1/scripts/' + SCRIPT_ID + ':run',
+            'method': 'POST', 'headers' : headers, 'body': request
+        });
+
+        op.execute(function(resp) {
+          if (resp.error && resp.error.status) {
+            // The API encountered a problem before the script started executing.
+            appendPre('Error calling API:');
+            appendPre(JSON.stringify(resp, null, 2));
+          } else if (resp.error) {
+            // The API executed, but the script returned an error.
+            // Extract the first (and only) set of error details.
+            var error = resp.error.details[0];
+            appendPre('Script error message: ' + error.errorMessage);
+          } else {
+            // The structure of the result will depend upon what the Apps Script function returns. 
+            var result = resp.response;
+            if (Object.keys(result ).length == 0) {
+                appendPre('Nothing returned!');
+            } else {
+              appendPre('Result:');
+              appendPre('\t' + result);
+
+            }
+          }
+        });
+      }
+	  
+	  
       /**
        * Append a pre element to the body containing the given message
        * as its text node.
@@ -123,14 +173,14 @@
        * @param {string} message Text to be placed in pre element.
        */
       function appendPre(message) {
+        console.log("function appendPre(message)");
         var pre = document.getElementById('output');
         var textContent = document.createTextNode(message + '\n');
         pre.appendChild(textContent);
       }
 
     </script>
-    <script src="https://apis.google.com/js/client.js?onload=checkAuth">
-    </script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
   </head>
   <body>
     <div id="authorize-div" style="display: none">
@@ -139,6 +189,11 @@
       <button id="authorize-button" onclick="handleAuthClick(event)">
         Authorize
       </button>
+    </div>
+    <div id="clickme" style="display: inline">
+      <span>Click Me</span>
+      <!--Button for the user to click to call a function -->
+      <button id="clickme-button" onclick="handleClickMe(event)"> here </button>
     </div>
     <pre id="output"></pre>
   </body>
