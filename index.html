@@ -36,7 +36,6 @@
         if (authResult && !authResult.error) {
           // Hide auth UI, then load client library.
           authorizeDiv.style.display = 'none';
-          callScriptFunction();
         } else {
           // Show auth UI, allowing the user to initiate authorization by
           // clicking authorize button.
@@ -194,6 +193,7 @@
       <span>Click Me</span>
       <!--Button for the user to click to call a function -->
       <button id="clickme-button" onclick="handleClickMe(event)"> here </button>
+      <button id="handecall-button" onclick="callScriptFunction(event)"> here </button>
     </div>
     <pre id="output"></pre>
   </body>
